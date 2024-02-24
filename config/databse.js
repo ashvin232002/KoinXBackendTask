@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const  Crypto = require("../models/Crypto")
 require("dotenv").config();
 
 
