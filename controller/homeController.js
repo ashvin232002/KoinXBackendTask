@@ -60,3 +60,40 @@ exports.currencyConversion =  async (req,res)=>{
         })
     }
 }
+
+
+exports.getCompanies =  async(req,res)=>{
+    try{
+       
+        const  {currency} = req.body;
+        
+        if(!currency){
+            return res.status(400).json({
+                success:false,
+                message:"Pleasse Enter The all Drtails",
+            })
+        }
+
+        
+        currency.toLowerCase();
+        const response = await fetch(`https://api.coingecko.com/api/v3/companies/public_treasury/${currency}`);
+
+        const result =  await response.json();
+
+        const companies = [];
+        result.companies.forEach(company => {
+            companies.push(company.name);
+        });
+       
+        return res.status(200).json({
+            success:true,
+            data:companies
+        })
+    }
+    catch(error){
+        return res.status(400).json({
+            success:false,
+            message:"Error While Linsting all Companies"
+        })
+    }
+}
